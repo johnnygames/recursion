@@ -15,7 +15,7 @@ var stringifyJSON = function(obj) {
 
   if (typeof obj === 'string') {
   	obj = '"' + obj + '"';
-  	return String(obj);
+  	return obj; //coercion not necessary, was breaking something
   }
 
   if (Array.isArray(obj)) {
@@ -26,7 +26,7 @@ var stringifyJSON = function(obj) {
   	//So what we do is use a for loop and then recursively call stringify
 
   	for (var i = 0; i < length; i++) {
-  		holder = holder.concat(stringifyJSON(obj[i]));
+  		holder = holder.concat(stringifyJSON(obj[i] + '')); //concat is not working well here
   	}
   	return holder;
   	console.log(holder);
