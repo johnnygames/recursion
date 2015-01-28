@@ -6,26 +6,46 @@
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className){
   //establish an empty array to hold the results
-  var results;
+  var results = [];
 
-  function travelDOM (initial_node) {
-  	if (!initial_node) {
-  		initial_node = document.body;
-	}
-	for (var i = 0, counter = initial_node.childNodes.length; i < counter; i++) {
-		if (initial_node.childNodes[i].childNodes.length > 0) {
-			travelDOM(initial_node.childNodes[i]);
-		}
-
-		if (initial_node.childNodes[i].className && initial_node.className.indexOf(className) >= 0) {
-			results.push(initial_node.childNodes[i]);
-		}
-	}
-
+  var travelDOM = function (node) {
+  	if (!node) {
+  		if (node.classList) {
+  			if (node.classList.contains(className)) {
+  				results.push(node);
+  			}
+  			travelDOM(node.childNodes);
+  	}
+  } else {
+  		if (node.classList.length) {
+			for (var i = 0; i < node.classList.length; i++) {
+  				if (node.classList[i].classList !== undefined) {
+  					travelDOM(node.classList[i]);
+  			}
+  		}
+  	}
   }
-
   travelDOM(document.body);
   return results;
+};
+};
+//   //	initial_node = document.body;
+// 	//}
+// 	for (var i = 0, counter = node.childNodes.length; i < counter; i++) {
+// 		if (node.childNodes[i].childNodes.length > 0) {
+// 			travelDOM(node.childNodes[i]);
+// 		}
+// 		if(node.childNodes[i].getAttribute && node.childNodes[i].getAttribute('class')) {
+//         	if(node.childNodes[i].getAttribute('class').split(" ").indexOf(className) >= 0) {
+//           		results.push(node.childNodes[i]);
+// 		//if (node.childNodes[i].className && node.childNodes[i].className.indexOf(className) >= 0) {
+// 		//	results.push(node.childNodes[i]);
+// 		//}
+// 	}
+
+//   };
+// }
+  
 
   /** The first thing that we need to do is write an inner function
   
@@ -45,4 +65,7 @@ var getElementsByClassName = function(className){
   return resultsg
   
   **/
-};
+// };
+// travelDOM(initialNode);
+//   return results;
+// };
