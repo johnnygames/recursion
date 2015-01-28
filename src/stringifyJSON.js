@@ -18,4 +18,18 @@ var stringifyJSON = function(obj) {
   	return String(obj);
   }
 
+  if (Array.isArray(obj)) {
+  	var holder = '';
+  	var length = obj.length;
+
+  	//Here is where we are going to iterate through the obj (if its an array) 
+  	//So what we do is use a for loop and then recursively call stringify
+
+  	for (var i = 0; i < length; i++) {
+  		holder = holder.concat(stringifyJSON(obj[i]));
+  	}
+  	return holder;
+  	console.log(holder);
+
+  }
 };
