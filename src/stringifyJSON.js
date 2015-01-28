@@ -5,31 +5,44 @@
 
 var stringifyJSON = function(obj) {
   //fail cases
-  if (obj === null) {
-  	return null;
+   //console.log("starting");
+   
+    if (obj === null) {
+        console.log("parameter is null");	
+        return null;
   }
 
-  if (obj === undefined) {
+  else if (obj === undefined) {
+    console.log("parameter is undefined");
   	return undefined;
   }
-
-  if (typeof obj === 'string') {
-  	obj = '"' + obj + '"';
-  	return obj; //coercion not necessary, was breaking something
+    
+  else if (typeof obj === 'number') {
+        return obj + '';
+    }
+    
+  else if (typeof obj === 'string') {
+  	console.log(obj + " is a string");
+    obj = '"' + obj + '"';
+  	return obj;
   }
 
-  if (Array.isArray(obj)) {
-  	var holder = '';
+  else if (Array.isArray(obj)) {
+  	var holder = [];
   	var length = obj.length;
+    //console.log(length);
 
   	//Here is where we are going to iterate through the obj (if its an array) 
   	//So what we do is use a for loop and then recursively call stringify
 
-  	for (var i = 0; i < length; i++) {
-  		holder = holder.concat(stringifyJSON(obj[i] + '')); //concat is not working well here
-  	}
-  	return holder;
-  	console.log(holder);
-
-  }
+  	for (var i = 0; i <= length; i++) {
+  		console.log(holder);
+        holder.push(stringifyJSON(obj[i]));
+  	};
+  	return '[' + holder + ']';
+  };
 };
+
+
+
+stringifyJSON([1, 2, 3, 4]);
