@@ -1,15 +1,10 @@
-// this is what you would do if you liked things to be easy:
-// var stringifyJSON = JSON.stringify;
-
-// but you don't so you're going to write it from scratch:
-
 var stringifyJSON = function(obj) {
   //fail cases
    //console.log("starting");
    
     if (obj === null) {
         console.log("parameter is null");	
-        return null;
+        return 'null';
   }
 
   else if (obj === undefined) {
@@ -38,11 +33,20 @@ var stringifyJSON = function(obj) {
   	for (var i = 0; i <= length; i++) {
   		console.log(holder);
         holder.push(stringifyJSON(obj[i]));
-  	};
+  	}
   	return '[' + holder + ']';
-  };
+  }
+
+  else if (typeof obj === 'object') {
+  	var holder = [];
+  	for (var keys in obj) {
+        console.log(holder);
+  		holder.push(stringifyJSON(keys) + ":" + stringifyJSON(obj[keys]));
+  	}
+  	return '{' + holder + '}';
+  }
+
+  else {
+  	return obj.toString();
+  }
 };
-
-
-
-stringifyJSON([1, 2, 3, 4]);
