@@ -30,9 +30,12 @@ var stringifyJSON = function(obj) {
   	//Here is where we are going to iterate through the obj (if its an array) 
   	//So what we do is use a for loop and then recursively call stringify
 
-  	for (var i = 0; i <= length; i++) {
-  		console.log(holder);
+  	for (var i = 0; i < length; i++) {
         holder.push(stringifyJSON(obj[i]));
+        console.log(holder[i]);
+        // if (holder[i].slice(-1) === ',') {
+        // 	holder[i] = holder.slice(0, -1);
+        // }
   	}
   	return '[' + holder + ']';
   }
@@ -40,6 +43,9 @@ var stringifyJSON = function(obj) {
   else if (typeof obj === 'object') {
   	var holder = [];
   	for (var keys in obj) {
+  		if (typeof obj[keys] === 'function') {
+  			return '{}';
+  		}
         console.log(holder);
   		holder.push(stringifyJSON(keys) + ":" + stringifyJSON(obj[keys]));
   	}
